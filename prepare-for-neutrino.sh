@@ -115,8 +115,7 @@ PACKAGES="\
 	${UBUNTU:+libmount-dev}                                                                                       \
 	${UBUNTU:+mtools}                                                                                             \
 	${UBUNTU:+u-boot-tools}												\
-	${UBUNTU:+android-sdk-libsparse-utils}										\
-	                                                                                       	\
+	${UBUNTU:+android-sdk-libsparse-utils}										\                                                                                       	\
     	${UBUNTU:+libfreetype6-dev}											\
     	${UBUNTU:+libid3tag0-dev}											\
     	${UBUNTU:+libmad0-dev}												\
