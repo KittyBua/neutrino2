@@ -405,7 +405,7 @@ int CDataResetNotifier::exec(CMenuTarget *parent, const std::string& actionKey)
 		if(audioDecoder)
 			audioDecoder->SetHdmiDD(g_settings.hdmi_dd );
 
-		CNeutrinoApp::getInstance()->SetupTiming();
+		CNeutrinoApp::getInstance()->setupTiming();
 
 		return true;
 	}
@@ -614,7 +614,7 @@ bool CChannelListSettings::changeNotify(const std::string& OptionName, void */*d
 		bool ret = (MessageBox(_("Information"), _("Neutrino restart"), mbrNo, mbNo | mbYes) == mbrYes);
 
 		if(ret)
-			CNeutrinoApp::getInstance()->ExitRun(CNeutrinoApp::RESTART);
+			CNeutrinoApp::getInstance()->exitRun(CNeutrinoApp::RESTART);
 	}
 	
 	return false;
@@ -644,7 +644,7 @@ int CEPGSettings::exec(CMenuTarget* parent, const std::string& actionKey)
 			else
 			{
 				g_settings.epg_dir = b.getSelectedFile()->Name;
-				CNeutrinoApp::getInstance()->SendSectionsdConfig();
+				CNeutrinoApp::getInstance()->sendSectionsdConfig();
 			}
 		}
 
@@ -882,7 +882,12 @@ bool CXMLTVConfigNotifier::changeNotify(const std::string&, void *)
 	dprintf(DEBUG_NORMAL, "CXMLTVConfigNotifier::changeNotify\n");
 
         if (g_settings.epg_xmltv)
-		CSectionsd::getInstance()->readSIfromXMLTV(live_channel_id);
+        {
+        	for (unsigned long i = 0; i < g_settings.xmltv.size(); i++)
+        	{
+			CSectionsd::getInstance()->readSIfromXMLTV(g_settings.xmltv[i].c_str());
+		}
+	}
 	
         return true;
 }
