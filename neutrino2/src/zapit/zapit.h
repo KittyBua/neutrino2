@@ -331,7 +331,15 @@ class CZapit
 		void leaveStandby(void);
 		
 		//
-		int start_scan(commandStartScan StartScan);
+		pthread_t scan_thread; 
+		static void * start_scanthread(void *data);
+		static void * scan_transponder(void * data);
+		
+		//
+		pthread_t tsdt;
+		static void * sdt_thread(void * arg);
+		//
+		static void *updatePMTFilter(void *);
 		
 		CZapit(){};
 	public:
@@ -469,7 +477,6 @@ class CZapit
 
 		//
 		void Start(Z_start_arg *ZapStart_arg);
-		//void run();
 		void Stop();
 };
 
