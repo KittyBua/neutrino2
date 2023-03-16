@@ -80,6 +80,9 @@ see:
 * https://github.com/mohousch/buildsystem
 
 
+PC TV Karten Liste:
+
+https://wiki.ubuntuusers.de/DVB-Karten/
 
 
 
