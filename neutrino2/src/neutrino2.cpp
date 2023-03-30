@@ -5004,7 +5004,20 @@ int CNeutrinoApp::exec(CMenuTarget * parent, const std::string & actionKey)
 		if (MessageBox(_("Information"), _("do you want to reload EPG?"), mbrNo, mbYes | mbNo, NULL, MESSAGEBOX_WIDTH, 30, true) == mbrYes) 
 		{
 			HintBox(_("Information"), _("Reloading EPG, please be patient."));
-			readEPG();
+			
+			CSectionsd::getInstance()->readSIfromXML(g_settings.epg_dir.c_str());
+		}
+	}
+	else if (actionKey == "reloadxmltvepg")
+	{
+		if (MessageBox(_("Information"), _("do you want to reload XMLTV EPG?"), mbrNo, mbYes | mbNo, NULL, MESSAGEBOX_WIDTH, 30, true) == mbrYes) 
+		{
+			HintBox(_("Information"), _("Reloading XMLTV EPG, please be patient."));
+			
+			for (unsigned long i = 0; i < g_settings.xmltv.size(); i++)
+			{
+				CSectionsd::getInstance()->readSIfromXMLTV(g_settings.xmltv[i].c_str());
+			}
 		}
 	}
 	else if (actionKey == "delete_zapit")
@@ -5291,14 +5304,14 @@ bool CNeutrinoApp::getNVODMenu(ClistBox* menu)
 				nvod_time_x[0] = 0;
 
 			sprintf(nvod_s, "%s - %s %s", nvod_time_a, nvod_time_e, nvod_time_x);
-			menu->addItem(new CMenuForwarder(nvod_s, true, NULL, NVODChanger, nvod_id), (count == g_RemoteControl->selected_subchannel));
+			menu->addItem(new ClistBoxItem(nvod_s, true, NULL, NVODChanger, nvod_id), (count == g_RemoteControl->selected_subchannel));
 		} 
 		else 
 		{
 			if (count == 0)
-				menu->addItem(new CMenuForwarder(Latin1_to_UTF8(e->subservice_name.c_str()).c_str(), true, NULL, NVODChanger, nvod_id, RC_blue, NEUTRINO_ICON_BUTTON_BLUE));
+				menu->addItem(new ClistBoxItem(Latin1_to_UTF8(e->subservice_name.c_str()).c_str(), true, NULL, NVODChanger, nvod_id, RC_blue, NEUTRINO_ICON_BUTTON_BLUE));
 			else
-				menu->addItem(new CMenuForwarder(Latin1_to_UTF8(e->subservice_name.c_str()).c_str(), true, NULL, NVODChanger, nvod_id, CRCInput::convertDigitToKey(count)), (count == g_RemoteControl->selected_subchannel));
+				menu->addItem(new ClistBoxItem(Latin1_to_UTF8(e->subservice_name.c_str()).c_str(), true, NULL, NVODChanger, nvod_id, CRCInput::convertDigitToKey(count)), (count == g_RemoteControl->selected_subchannel));
 		}
 
 		count++;

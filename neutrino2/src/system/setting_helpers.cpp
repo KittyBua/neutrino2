@@ -275,7 +275,10 @@ const keyval USERMENU_ITEM_OPTIONS[USERMENU_ITEM_OPTION_COUNT] =
 	{ SNeutrinoSettings::ITEM_REMOTE, _("Lock RC") },
 	{ SNeutrinoSettings::ITEM_DELETE_ZAPIT, _("Delete channels") },
 	{ SNeutrinoSettings::ITEM_DELETE_WEBTV, _("Delete WebTV channels") },
-	{ SNeutrinoSettings::ITEM_FREEMEMORY, ("Free Memory") }
+	{ SNeutrinoSettings::ITEM_FREEMEMORY, _("Free Memory") },
+	{ SNeutrinoSettings::ITEM_LOAD_ZAPIT, _("Reload channel lists") },
+	{ SNeutrinoSettings::ITEM_LOAD_XMLTV, _("Reload XMLTV EPG") },
+	{ SNeutrinoSettings::ITEM_LOAD_EPG, _("Reload EPG") }
 };
 
 int CUserMenuMenu::exec(CMenuTarget* parent, const std::string& actionKey)
@@ -330,7 +333,7 @@ int CUserMenuMenu::exec(CMenuTarget* parent, const std::string& actionKey)
 	//
         CStringInputSMS name(_("User menu"), g_settings.usermenu_text[button].c_str());
         
-        menu->addItem(new CMenuForwarder(_("Name"), true, g_settings.usermenu_text[button].c_str(), &name));
+        menu->addItem(new ClistBoxItem(_("Name"), true, g_settings.usermenu_text[button].c_str(), &name));
         menu->addItem(new CMenuSeparator(LINE));
 
         char text[10];
